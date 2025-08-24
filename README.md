@@ -40,6 +40,16 @@ PRODIGY_ML_02/
 
 ```
 
+## ⚙️ Installation
+
+Clone the repo and install required dependencies:
+
+```bash
+git clone https://github.com/animesh33-ctrl/PRODIGY_ML_01
+cd PRODIGY_ML_01
+pip install -r requirements.txt
+```
+
 ## How to Run
 
 ```bash
