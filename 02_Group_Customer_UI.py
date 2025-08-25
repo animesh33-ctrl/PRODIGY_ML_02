@@ -11,15 +11,13 @@ import gradio as gr
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
-# === Settings ===
+
 DEFAULT_DATA_PATH = r"C:\Programming\Prodigy Infotech\PRODIGY_ML_02\02_Clustering\Mall_Customers.csv"
 ALT_DATA_PATH = "PRODIGY_ML_02\02_Clustering\Mall_Customers.csv"
 PIPELINE_PATH = "customer_segmentation_pipeline.joblib"
 FEATURES = ["Age", "Annual Income (k$)", "Spending Score (1-100)"]
 
-# ------------------------------------------------------------
-# Utilities
-# ------------------------------------------------------------
+
 def find_data_path():
     if Path(DEFAULT_DATA_PATH).exists():
         return DEFAULT_DATA_PATH
@@ -89,7 +87,6 @@ def plot_clusters(pipe: Pipeline, user_point=None):
     plt.legend()
     plt.tight_layout()
 
-    # Save to temporary file to display in Gradio
     img_path = "cluster_plot.png"
     plt.savefig(img_path)
     plt.close()
@@ -123,22 +120,17 @@ def predict_cluster(age: float, income_k: float, spending: float):
         f"**Segment center:** {center_desc}\n"
     )
 
-    # Generate cluster plot
     img_path = plot_clusters(pipe, user_point=x)
 
     return text, centers_df, scores_tbl, img_path
 
-# ------------------------------------------------------------
-# Build pipeline once
-# ------------------------------------------------------------
+#pipeline
 _pipeline = train_or_load_pipeline()
 _centers_df = centers_in_original_units(_pipeline)
 predict_cluster.pipe = _pipeline
 predict_cluster.centers_df = _centers_df
 
-# ------------------------------------------------------------
 # Gradio UI
-# ------------------------------------------------------------
 title = "Customer Segmentation (KMeans) – Mall Customers"
 desc = (
     "Enter a customer's **Age**, **Annual Income (k$)**, and **Spending Score (1–100)**. "
@@ -177,4 +169,4 @@ with gr.Blocks(title=title) as demo:
     )
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860)
