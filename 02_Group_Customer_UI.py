@@ -112,7 +112,7 @@ def predict_cluster(age: float, income_k: float, spending: float):
     inv = (dists.max() - dists)
     scores = (inv - inv.min()) / (inv.max() - inv.min() + 1e-12)
     scores_tbl = pd.DataFrame(
-        {"Cluster": list(range(len(dists))), "Closeness (0–1)": scores.round(3)}
+        {"Cluster": list(range(len(dists))), "Closeness (0-1)": scores.round(3)}
     ).sort_values("Cluster").reset_index(drop=True)
 
     text = (
@@ -131,9 +131,9 @@ predict_cluster.pipe = _pipeline
 predict_cluster.centers_df = _centers_df
 
 # Gradio UI
-title = "Customer Segmentation (KMeans) – Mall Customers"
+title = "Customer Segmentation (KMeans) - Mall Customers"
 desc = (
-    "Enter a customer's **Age**, **Annual Income (k$)**, and **Spending Score (1–100)**. "
+    "Enter a customer's **Age**, **Annual Income (k$)**, and **Spending Score (1-100)**. "
     "The app standardizes inputs and assigns a cluster using **KMeans (k=5)**, "
     "matching the notebook setup."
 )
@@ -156,7 +156,7 @@ with gr.Blocks(title=title) as demo:
         wrap=True
     )
     out_scores = gr.Dataframe(
-        headers=["Cluster", "Closeness (0–1)"],
+        headers=["Cluster", "Closeness (0-1)"],
         label="Closeness to each Cluster",
         interactive=False
     )
@@ -169,4 +169,4 @@ with gr.Blocks(title=title) as demo:
     )
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860)
+    demo.launch()
